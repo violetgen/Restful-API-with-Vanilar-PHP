@@ -93,4 +93,34 @@
   
           return $stmt;
       }
+
+      public function updateBook(){
+        $query = 'UPDATE  ' . 
+        $this->table . ' 
+            SET
+              title = :title,
+              author = :author,
+              price = :price
+            WHERE
+            id = :id';
+  
+          $stmt = $this->conn->prepare($query);
+          //Clean data
+          $this->title = htmlspecialchars(strip_tags($this->title));
+          $this->author = htmlspecialchars(strip_tags($this->author));
+          $this->price = htmlspecialchars(strip_tags($this->price));
+          $this->id = htmlspecialchars(strip_tags($this->id));
+
+          $stmt->bindParam(':title', $this->title);
+          $stmt->bindParam(':author', $this->author);
+          $stmt->bindParam(':price', $this->price);
+          $stmt->bindParam(':id', $this->id);
+  
+          if($stmt->execute()) {
+            return true;
+          }
+          printf("Error occurred: ", $stmt->error);
+  
+          return false;
+        }
   }
