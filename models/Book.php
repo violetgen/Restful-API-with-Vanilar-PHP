@@ -63,4 +63,34 @@
   
           return $stmt;
       }
+
+      public function singleBook() {
+        $query = 'SELECT 
+            id,
+            title,
+            author,
+            price,
+            created_at
+          FROM
+            ' . $this->table . ' 
+            WHERE
+              id = ?
+            LIMIT 0,1
+          ';
+  
+          //prepare statement:
+          $stmt = $this->conn->prepare($query);
+  
+          $stmt->bindParam(1, $this->id);
+  
+          $stmt->execute();
+  
+          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+          $this->title = $row['title'];
+          $this->author = $row['author'];
+          $this->price = $row['price'];
+  
+          return $stmt;
+      }
   }
