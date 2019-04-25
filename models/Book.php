@@ -42,4 +42,25 @@
 
         return false;
       }
+
+      public function readBook() {
+        $query = 'SELECT 
+            id,
+            title,
+            author,
+            price,
+            created_at
+          FROM
+            ' . $this->table . ' 
+          ORDER BY
+            created_at DESC
+          ';
+  
+          //prepare statement:
+          $stmt = $this->conn->prepare($query);
+  
+          $stmt->execute();
+  
+          return $stmt;
+      }
   }

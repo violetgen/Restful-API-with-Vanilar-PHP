@@ -14,17 +14,17 @@ $database = new Database();
 $db = $database->connect();
 
 //Book object 
-$post = new Book($db);
+$book = new Book($db);
 
 //get data from request:
 $data = json_decode(file_get_contents("php://input"));
 
 
-$post->title = $data->title;
-$post->author = $data->author;
-$post->price = $data->price;
+$book->title = $data->title;
+$book->author = $data->author;
+$book->price = $data->price;
 
-if($post->createBook()) {
+if($book->createBook()) {
   echo json_encode(['message' => 'Book created']);
 } else {
   echo json_encode(['message' => 'Cannot create book']);
